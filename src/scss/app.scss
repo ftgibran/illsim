@@ -1,0 +1,100 @@
+// Fonts
+@import 'https://fonts.googleapis.com/css?family=Raleway:300,400,600';
+@import 'https://fonts.googleapis.com/css?family=Sahitya';
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+
+// Variables
+@import "~materialize-css/sass/components/color";
+@import "variables";
+
+//Css-Utils
+@import "utils";
+@import "nouislider";
+
+// Materialize
+@import "~materialize-css/sass/materialize";
+
+@media #{$small-and-down} {
+  .sidenav {
+    width: 100% !important;
+  }
+}
+
+@media #{$medium-and-up} {
+}
+
+@media #{$medium-and-down} {
+}
+
+@media #{$large-and-up} {
+}
+
+html, body, #app {
+  height: 100%;
+}
+
+html {
+  font-family: 'Raleway', sans-serif;
+}
+
+body {
+  background: #f5f8fa;
+  font-size: 120%;
+}
+
+nav {
+  color: black !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.17em;
+}
+
+h4 {
+  font-size: 1.12em;
+}
+
+h5 {
+  font-size: .83em;
+}
+
+h6 {
+  font-size: .75em;
+}
+
+small {
+  font-size: .5em !important;
+}
+
+p {
+  line-height: 1.5;
+  font-weight: lighter;
+}
+
+.sahitya {
+  font-family: 'Sahitya', serif;
+}
+
+.collection-header {
+  border-bottom: 1px solid #ccc;
+}
+
+.collapsible .collection {
+  border: 1px solid #ccc;
+}
