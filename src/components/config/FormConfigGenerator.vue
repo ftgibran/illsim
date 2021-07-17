@@ -3,29 +3,31 @@
     <div class="input-field ta-l">
       <ui-select
         label="Método de Geração"
-        :options.sync="methods"
-        :val.sync="config.method"
+        :options="methods"
+        v-model="config.method"
       ></ui-select>
     </div>
 
     <form-config-full-random
-      v-show="config.method == 'fullRandom'"
+      v-show="config.method === 'fullRandom'"
       :factory="config.factory.fullRandom"
-      :mode.sync="mode"
-      :infect-by.sync="infectBy"
+      :simulation="simulation"
+      v-model="mode"
     ></form-config-full-random>
 
     <form-config-uniform-format
-      v-show="config.method == 'uniformFormat'"
+      v-show="config.method === 'uniformFormat'"
       :factory="config.factory.uniformFormat"
-      :mode.sync="mode"
-      :infect-by.sync="infectBy"
+      :simulation="simulation"
+      v-model="mode"
     ></form-config-uniform-format>
   </ui-loader>
 </template>
 
 <script>
 export default {
+  props: ['config', 'simulation'],
+
   data() {
     return {
       methods: null,
@@ -42,15 +44,24 @@ export default {
     }
   },
 
-  props: ['config', 'mode', 'infectBy'],
-
   methods: {
     init() {
       this.methods = [this.fullRandom, this.uniformFormat]
     },
   },
 
-  ready() {
+  computed: {
+    mode: {
+      get() {
+        return this.simulation.mode
+      },
+      set(val) {
+        this.simulation.mode = val
+      },
+    },
+  },
+
+  mounted() {
     this.init()
     this.$emit('load')
   },

@@ -1,39 +1,36 @@
 import Vue from 'vue'
+import Network from './Network'
+import Analytics from './Analytics'
+import Loader from './Loader'
+import Nav from './Nav'
+import SideNav from './SideNav'
+import Slider from './Slider'
+import Checkbox from './Checkbox'
+import Select from './Select'
+import Stats from './Stats'
+import FormConfig from './config/FormConfig'
+import FormConfigAnimation from './config/FormConfigAnimation'
+import FormConfigSimulation from './config/FormConfigSimulation'
+import FormConfigGenerator from './config/FormConfigGenerator'
+import FormConfigUniformFormat from './config/FormConfigUniformFormat'
+import FormConfigFullRandom from './config/FormConfigFullRandom'
+import FormConfigAnalytics from './config/FormConfigAnalytics'
 
-Vue.component('app', require('../App.vue'))
-Vue.component('network', require('./Network.vue'))
-Vue.component('analytics', require('./Analytics.vue'))
+Vue.component('network', Network)
+Vue.component('analytics', Analytics)
 
-Vue.component('ui-loader', require('./Loader.vue'))
-Vue.component('ui-nav', require('./Nav.vue'))
-Vue.component('ui-sidenav', require('./SideNav.vue'))
-Vue.component('ui-slider', require('./Slider.vue'))
-Vue.component('ui-checkbox', require('./Checkbox.vue'))
-Vue.component('ui-select', require('./Select.vue'))
-Vue.component('ui-stats', require('./Stats.vue'))
+Vue.component('ui-loader', Loader)
+Vue.component('ui-nav', Nav)
+Vue.component('ui-sidenav', SideNav)
+Vue.component('ui-slider', Slider)
+Vue.component('ui-checkbox', Checkbox)
+Vue.component('ui-select', Select)
+Vue.component('ui-stats', Stats)
 
-Vue.component('form-config', require('./config/FormConfig.vue'))
-Vue.component(
-  'form-config-animation',
-  require('./config/FormConfigAnimation.vue')
-)
-Vue.component(
-  'form-config-simulation',
-  require('./config/FormConfigSimulation.vue')
-)
-Vue.component(
-  'form-config-generator',
-  require('./config/FormConfigGenerator.vue')
-)
-Vue.component(
-  'form-config-uniform-format',
-  require('./config/FormConfigUniformFormat.vue')
-)
-Vue.component(
-  'form-config-full-random',
-  require('./config/FormConfigFullRandom.vue')
-)
-Vue.component(
-  'form-config-analytics',
-  require('./config/FormConfigAnalytics.vue')
-)
+Vue.component('form-config', FormConfig)
+Vue.component('form-config-animation', FormConfigAnimation)
+Vue.component('form-config-simulation', FormConfigSimulation)
+Vue.component('form-config-generator', FormConfigGenerator)
+Vue.component('form-config-uniform-format', FormConfigUniformFormat)
+Vue.component('form-config-full-random', FormConfigFullRandom)
+Vue.component('form-config-analytics', FormConfigAnalytics)

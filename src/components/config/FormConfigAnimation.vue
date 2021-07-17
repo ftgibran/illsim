@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="mode == 'scientific'">
+    <div v-if="mode === 'scientific'">
       <div class="card amber lighten-5">
         <div class="card-content ta-c">
           <p>
@@ -14,7 +14,7 @@
     <ui-slider
       v-if="config"
       label="Escala de tempo"
-      :val.sync="config.scale"
+      v-model="config.scale"
       step="0.1"
       min="0"
       max="2"
@@ -30,7 +30,7 @@
           <ui-slider
             v-if="config"
             label="Tempo de pausa"
-            :val.sync="config.infect.restTime"
+            v-model="config.infect.restTime"
             step="0.1"
             min="0"
             max="10"
@@ -41,7 +41,7 @@
           <ui-slider
             v-if="config"
             label="Duração de movimento (s)"
-            :val.sync="config.infect.dotMovimentTime"
+            v-model="config.infect.dotMovimentTime"
             step="0.1"
             min="0"
             max="3"
@@ -52,7 +52,7 @@
           <ui-slider
             v-if="config"
             label="Duração de expansão (s)"
-            :val.sync="config.infect.expandTime"
+            v-model="config.infect.expandTime"
             step="0.1"
             min="0"
             max="3"
@@ -63,7 +63,7 @@
           <ui-slider
             v-if="config"
             label="Atraso de expansão (s)"
-            :val.sync="config.infect.expandDelay"
+            v-model="config.infect.expandDelay"
             step="0.1"
             min="0"
             max="3"
@@ -74,7 +74,7 @@
           <ui-slider
             v-if="config"
             label="Escala de expansão"
-            :val.sync="config.infect.expandScale"
+            v-model="config.infect.expandScale"
             step="0.1"
             min="1"
             max="2"
@@ -85,7 +85,7 @@
           <ui-slider
             v-if="config"
             label="Duração de retração (s)"
-            :val.sync="config.infect.retractTime"
+            v-model="config.infect.retractTime"
             step="0.1"
             min="0"
             max="3"
@@ -96,7 +96,7 @@
           <ui-slider
             v-if="config"
             label="Raio de vibração"
-            :val.sync="config.infect.shakeRadius"
+            v-model="config.infect.shakeRadius"
             step="1"
             min="0"
             max="30"
@@ -115,7 +115,7 @@
           <ui-slider
             v-if="config"
             label="Tempo de pausa"
-            :val.sync="config.recover.restTime"
+            v-model="config.recover.restTime"
             step="0.1"
             min="0"
             max="10"
@@ -126,7 +126,7 @@
           <ui-slider
             v-if="config"
             label="Duração de expansão (s)"
-            :val.sync="config.recover.expandTime"
+            v-model="config.recover.expandTime"
             step="0.1"
             min="0"
             max="3"
@@ -137,7 +137,7 @@
           <ui-slider
             v-if="config"
             label="Escala de expansão"
-            :val.sync="config.recover.expandScale"
+            v-model="config.recover.expandScale"
             step="0.1"
             min="1"
             max="2"
@@ -148,7 +148,7 @@
           <ui-slider
             v-if="config"
             label="Duração de retração (s)"
-            :val.sync="config.recover.retractTime"
+            v-model="config.recover.retractTime"
             step="0.1"
             min="0"
             max="3"
@@ -166,7 +166,7 @@
           <ui-slider
             v-if="config"
             label="Tempo de pausa"
-            :val.sync="config.vaccinate.restTime"
+            v-model="config.vaccinate.restTime"
             step="0.1"
             min="0"
             max="10"
@@ -177,7 +177,7 @@
           <ui-slider
             v-if="config"
             label="Duração de expansão (s)"
-            :val.sync="config.vaccinate.expandTime"
+            v-model="config.vaccinate.expandTime"
             step="0.1"
             min="0"
             max="3"
@@ -188,7 +188,7 @@
           <ui-slider
             v-if="config"
             label="Escala de expansão"
-            :val.sync="config.vaccinate.expandScale"
+            v-model="config.vaccinate.expandScale"
             step="0.1"
             min="1"
             max="2"
@@ -199,7 +199,7 @@
           <ui-slider
             v-if="config"
             label="Duração de retração (s)"
-            :val.sync="config.vaccinate.retractTime"
+            v-model="config.vaccinate.retractTime"
             step="0.1"
             min="0"
             max="3"
@@ -217,7 +217,7 @@
           <ui-slider
             v-if="config"
             label="Tempo de pausa"
-            :val.sync="config.death.restTime"
+            v-model="config.death.restTime"
             step="0.1"
             min="0"
             max="10"
@@ -228,7 +228,7 @@
           <ui-slider
             v-if="config"
             label="Escala de retração"
-            :val.sync="config.death.retractScale"
+            v-model="config.death.retractScale"
             step="0.1"
             min="0"
             max="1"
@@ -239,7 +239,7 @@
           <ui-slider
             v-if="config"
             label="Duração de retração (s)"
-            :val.sync="config.death.retractTime"
+            v-model="config.death.retractTime"
             step="0.1"
             min="0"
             max="4"
@@ -250,7 +250,7 @@
           <ui-slider
             v-if="config"
             label="Duração de retração (aresta) (s)"
-            :val.sync="config.death.edgeRetractTime"
+            v-model="config.death.edgeRetractTime"
             step="0.1"
             min="0"
             max="3"
@@ -261,7 +261,7 @@
           <ui-slider
             v-if="config"
             label="Tamanho de retração (aresta)"
-            :val.sync="config.death.edgeRetractSize"
+            v-model="config.death.edgeRetractSize"
             step="0.1"
             min="0"
             max="3"
@@ -272,7 +272,7 @@
           <ui-slider
             v-if="config"
             label="Atraso de retração (aresta) (s)"
-            :val.sync="config.death.edgeRetractDelay"
+            v-model="config.death.edgeRetractDelay"
             step="0.1"
             min="0"
             max="3"
@@ -283,7 +283,7 @@
           <ui-slider
             v-if="config"
             label="Duração de expansão (nascimento) (s)"
-            :val.sync="config.death.birthExpandTime"
+            v-model="config.death.birthExpandTime"
             step="0.1"
             min="0"
             max="3"
@@ -294,7 +294,7 @@
           <ui-slider
             v-if="config"
             label="Atraso de expansão (nascimento) (s)"
-            :val.sync="config.death.birthExpandDelay"
+            v-model="config.death.birthExpandDelay"
             step="0.1"
             min="0"
             max="3"
@@ -305,7 +305,7 @@
           <ui-slider
             v-if="config"
             label="Escala de expansão (nascimento)"
-            :val.sync="config.death.birthExpandScale"
+            v-model="config.death.birthExpandScale"
             step="0.1"
             min="0"
             max="3"
@@ -316,7 +316,7 @@
           <ui-slider
             v-if="config"
             label="Duração de retração (nascimento) (s)"
-            :val.sync="config.death.birthRetractTime"
+            v-model="config.death.birthRetractTime"
             step="0.1"
             min="0"
             max="3"
@@ -330,13 +330,12 @@
 </template>
 
 <script>
-import $ from 'jquery'
-
 export default {
   props: ['config', 'mode'],
 
-  ready() {
-    $(this.$el)
+  mounted() {
+    window
+      .$(this.$el)
       .find('.collapsible')
       .collapsible()
   },

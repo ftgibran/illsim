@@ -1,19 +1,36 @@
 <template>
-  <div id="app">
-    <ui-nav></ui-nav>
+  <div>
+    <ui-nav :state="state" />
 
-    <ui-sidenav v-ref:sidenav>
-      <form-config v-ref:config></form-config>
+    <ui-sidenav ref="sidenav">
+      <form-config ref="config" v-model="config" />
     </ui-sidenav>
 
-    <network v-ref:network></network>
+    <network
+      ref="network"
+      :config="config"
+      :network-state="state"
+      @changeState="stateEvent"
+    />
   </div>
 </template>
 
 <script>
+import config from './config'
+
 export default {
   name: 'App',
-  components: {},
+  data() {
+    return {
+      state: null,
+      config,
+    }
+  },
+  methods: {
+    stateEvent(val) {
+      this.state = val
+    },
+  },
 }
 </script>
 

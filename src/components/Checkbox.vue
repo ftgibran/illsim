@@ -5,10 +5,10 @@
         v-model="checked"
         type="checkbox"
         class="filled-in"
-        id="{{name}}"
-        name="{{name}}"
+        :id="name"
+        :name="name"
       />
-      <label class="truncate" for="{{name}}">{{ label }}</label>
+      <label class="truncate" :for="name">{{ label }}</label>
     </div>
 
     <slot v-if="checked"></slot>
@@ -26,12 +26,20 @@ export default {
       type: String,
       default: '',
     },
-    checked: {
+    value: {
       type: Boolean,
       default: false,
     },
   },
-
-  ready() {},
+  computed: {
+    checked: {
+      get() {
+        return this.value
+      },
+      set(val) {
+        this.$emit('input', val)
+      },
+    },
+  },
 }
 </script>

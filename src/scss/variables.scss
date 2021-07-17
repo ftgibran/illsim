@@ -1,16 +1,22 @@
-  $primary-color: color("blue-grey", "lighten-4") !default;
-  $primary-color-light: false !default;
-  $primary-color-dark: false !default;
-  @if not $primary-color-light {
-    $primary-color-light: lighten($primary-color, 15%);
-  }
-  @if not $primary-color-dark {
-    $primary-color-dark: darken($primary-color, 15%);
-  }
-  $secondary-color: color("blue-grey", "darken-2") !default;
-  $success-color: color("green", "base") !default;
-  $error-color: color("red", "base") !default;
+@import "~materialize-css/sass/components/color";
 
-  $link-color: color("light-blue", "darken-1") !default;
+$roboto-font-path: './assets/fonts/roboto/';
 
-  /*** More variables not shown here.. ***/
+$primary-color: color("blue-grey", "lighten-4");
+$primary-color-light: false;
+$primary-color-dark: false;
+@if not $primary-color-light {
+  $primary-color-light: lighten($primary-color, 15%);
+}
+
+@if not $primary-color-dark {
+  $primary-color-dark: darken($primary-color, 15%);
+}
+
+$secondary-color: color("blue-grey", "darken-2");
+$success-color: color("green", "base");
+$error-color: color("red", "base");
+
+$link-color: color("light-blue", "darken-1");
+
+/*** More variables not shown here.. ***/

@@ -8,7 +8,7 @@
       <div id="network"></div>
     </div>
 
-    <analytics v-ref:analytics></analytics>
+    <analytics ref="analytics" :state="state" :config="config"></analytics>
   </div>
 </template>
 
@@ -24,7 +24,7 @@
 }
 
 .content {
-  height: 100%;
+  height: 100vh;
 }
 </style>
 
@@ -35,9 +35,10 @@ import {TweenMax, Elastic, Power1, Power2, Power3} from 'gsap'
 import Data from '../data'
 
 export default {
+  props: ['config', 'networkState'],
+
   data() {
     return {
-      state: null,
       susceptible: 0,
       infected: 0,
       recovered: 0,
@@ -52,24 +53,48 @@ export default {
     population() {
       return this.susceptible + this.infected + this.recovered + this.vaccinated
     },
+    state: {
+      get() {
+        return this.networkState
+      },
+      set(val) {
+        this.$emit('changeState', val)
+      },
+    },
   },
 
-  events: {
-    play: function(rate) {
+  mounted() {
+    this.$root.$on('simulate', this.init)
+    this.$on('play', this.playEvent)
+    this.$on('stop', this.stopEvent)
+    this.$on('reset', this.resetEvent)
+    this.$on('statusChange', this.statusChangeEvent)
+  },
+
+  destroyed() {
+    this.$root.$off('simulate', this.init)
+    this.$off('play', this.playEvent)
+    this.$off('stop', this.stopEvent)
+    this.$off('reset', this.resetEvent)
+    this.$off('statusChange', this.statusChangeEvent)
+  },
+
+  methods: {
+    playEvent: function(rate) {
       this.state = 'playing'
       Data.step = setInterval(this.step, rate)
     },
 
-    stop: function() {
+    stopEvent: function() {
       this.state = 'paused'
       clearInterval(Data.step)
     },
 
-    reset: function() {
+    resetEvent: function() {
       this.state = 'initializing'
     },
 
-    statusChange: function(target, group) {
+    statusChangeEvent: function(target, group) {
       var $self = this
 
       switch (target.group) {
@@ -111,9 +136,7 @@ export default {
       target.group = group
       Data.nodes.update(target)
     },
-  },
 
-  methods: {
     init: function(config) {
       //Resets Data.network
       this.reset()

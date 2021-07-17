@@ -1,5 +1,5 @@
 <template>
-  <nav class="blue-grey lighten-5 pos-a z-depth-0">
+  <nav class="blue-grey lighten-5 pos-a z-depth-0" style="user-select: none">
     <div class="nav-wrapper">
       <ul class="left">
         <li>
@@ -9,9 +9,9 @@
             ><i class="material-icons">settings</i></a
           >
         </li>
-        <li v-if="$parent.$refs.network">
+        <li>
           <a
-            v-if="$parent.$refs.network.state == null"
+            v-if="state === null"
             @click="$parent.$refs.config.simulate()"
             class="pos-r"
             style="color:black; z-index: 1;"
@@ -20,7 +20,7 @@
             <span class="fw-b">Simular</span>
           </a>
           <a
-            v-if="$parent.$refs.network.state != null"
+            v-if="state !== null"
             @click="$parent.$refs.config.simulate()"
             class="pos-r"
             style="color:black; z-index: 1;"
@@ -29,9 +29,9 @@
             <span class="fw-b">Reset</span>
           </a>
         </li>
-        <li v-if="$parent.$refs.network">
+        <li>
           <a
-            v-if="$parent.$refs.network.state == 'paused'"
+            v-if="state === 'paused'"
             @click="$parent.$refs.network.play()"
             class="pos-r"
             style="color:black; z-index: 1;"
@@ -40,7 +40,7 @@
             <span class="fw-b">Play</span>
           </a>
           <a
-            v-if="$parent.$refs.network.state == 'playing'"
+            v-if="state === 'playing'"
             @click="$parent.$refs.network.stop()"
             class="pos-r"
             style="color:black; z-index: 1;"
@@ -53,14 +53,14 @@
 
       <ul class="right hide-on-small-only">
         <li>
-          <a href="#bmodal" class="btn waves-effect waves-light">
+          <a @click="openModal" class="btn waves-effect waves-light">
             <i class="material-icons left">timeline</i>
             Analytics
           </a>
         </li>
       </ul>
 
-      <div class="brand-logo center grey-text">
+      <div class="brand-logo mob-des-hidden center grey-text">
         <span class="sahitya">ILLSIM</span>
       </div>
     </div>
@@ -69,6 +69,12 @@
 
 <script>
 export default {
-  ready() {},
+  props: ['state'],
+
+  methods: {
+    openModal() {
+      window.$('#bmodal').modal('open')
+    },
+  },
 }
 </script>

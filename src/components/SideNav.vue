@@ -20,7 +20,6 @@
 </style>
 
 <script>
-import $ from 'jquery'
 import {TweenMax, Power1, Power3} from 'gsap'
 
 export default {
@@ -31,19 +30,6 @@ export default {
     },
   },
 
-  events: {
-    shown() {
-      $(document).on('click', e => {
-        if ($(e.target).closest(this.$el).length === 0) {
-          this.hide()
-        }
-      })
-    },
-    hidden() {
-      $(document).off('click')
-    },
-  },
-
   data() {
     return {
       hidden: false,
@@ -51,8 +37,19 @@ export default {
   },
 
   methods: {
+    shownEvent() {
+      window.$(document).on('click', e => {
+        if (window.$(e.target).closest(this.$el).length === 0) {
+          this.hide()
+        }
+      })
+    },
+    hiddenEvent() {
+      window.$(document).off('click')
+    },
+
     show() {
-      var el = $(this.$el)
+      var el = window.$(this.$el)
 
       TweenMax.to(el, this.time, {
         x: 0,
@@ -61,36 +58,55 @@ export default {
     },
 
     hide() {
-      var el = $(this.$el)
+      var el = window.$(this.$el)
 
       TweenMax.to(el, this.time, {
         x: -el.width(),
         ease: Power3.easeOut,
       })
     },
+    isTouchDevice() {
+      return (
+        'ontouchstart' in window ||
+        navigator.maxTouchPoints > 0 ||
+        navigator.msMaxTouchPoints > 0
+      )
+    },
   },
 
-  ready() {
-    var el = $(this.$el)
+  mounted() {
+    var el = window.$(this.$el)
 
-    $(el).hover(
-      () => {
-        TweenMax.to(el, this.time, {
-          opacity: 1,
-          ease: Power3.easeOut,
-        })
-      },
-      () => {
-        TweenMax.to(el, this.time, {
-          opacity: 0.4,
-          ease: Power1.easeOut,
-        })
-      }
-    )
+    if (!this.isTouchDevice()) {
+      window.$(el).hover(
+        () => {
+          TweenMax.to(el, this.time, {
+            opacity: 1,
+            ease: Power3.easeOut,
+          })
+        },
+        () => {
+          TweenMax.to(el, this.time, {
+            opacity: 0.4,
+            ease: Power1.easeOut,
+          })
+        }
+      )
+    }
 
-    this.$root.$on('reset', () => {
-      this.hide()
-    })
+    this.$root.$on('showSidebar', this.show)
+    this.$root.$on('reset', this.hide)
+
+    this.$on('shown', this.shownEvent)
+    this.$on('hidden', this.hiddenEvent)
+  },
+
+  destroyed() {
+    this.$root.$off('showSidebar', this.show)
+    this.$root.$off('reset', this.hide)
+
+    this.$off('shown', this.shownEvent)
+    this.$off('hidden', this.hiddenEvent)
   },
 }
 </script>

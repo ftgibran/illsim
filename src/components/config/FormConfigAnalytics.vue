@@ -3,7 +3,7 @@
     <ui-select
       label="Unidade por passo de tempo"
       :options="step"
-      :val.sync="config.step"
+      v-model="config.step"
     ></ui-select>
 
     <div class="row">
@@ -22,14 +22,14 @@
         class="col s6"
         label="Unidade"
         :options="unit"
-        :val.sync="config.length.unit"
+        v-model="config.length.unit"
       ></ui-select>
     </div>
 
     <ul class="collection" style="overflow: visible;">
       <li class="row collection-item">
         <ui-checkbox
-          :checked.sync="config.inoculationDelay.enabled"
+          v-model="config.inoculationDelay.enabled"
           name="config.inoculationDelay.enabled"
           label="Atrasar inoculação"
         >
@@ -49,7 +49,7 @@
               class="col s6"
               label="Unidade"
               :options="unit"
-              :val.sync="config.inoculationDelay.unit"
+              v-model="config.inoculationDelay.unit"
             ></ui-select>
           </div>
         </ui-checkbox>
@@ -63,14 +63,14 @@
 
       <li class="row collection-item">
         <ui-checkbox
-          :checked.sync="config.variables.relative.enabled"
+          v-model="config.variables.relative.enabled"
           name="config.variables.relative.enabled"
           label="Exibição relacional (%)"
         >
           <ui-slider
             v-if="config.variables"
             label="Precisão"
-            :val.sync="config.variables.relative.precision"
+            v-model="config.variables.relative.precision"
             step="1"
             min="2"
             max="5"
@@ -84,7 +84,7 @@
           icon="fa-square red-text"
           label="Variável 1"
           :options="variable1"
-          :val.sync="config.variables.display[0]"
+          v-model="config.variables.display[0]"
         >
         </ui-select>
         <ui-select
@@ -92,7 +92,7 @@
           icon="fa-square yellow-text"
           label="Variável 2"
           :options="variable2"
-          :val.sync="config.variables.display[1]"
+          v-model="config.variables.display[1]"
         >
         </ui-select>
         <ui-select
@@ -100,7 +100,7 @@
           icon="fa-square grey-text"
           label="Variável 3"
           :options="variable3"
-          :val.sync="config.variables.display[2]"
+          v-model="config.variables.display[2]"
         >
         </ui-select>
         <ui-select
@@ -108,7 +108,7 @@
           icon="fa-square green-text"
           label="Variável 4"
           :options="variable4"
-          :val.sync="config.variables.display[3]"
+          v-model="config.variables.display[3]"
         >
         </ui-select>
         <ui-select
@@ -116,7 +116,7 @@
           icon="fa-square black-text"
           label="Variável 5"
           :options="variable5"
-          :val.sync="config.variables.display[4]"
+          v-model="config.variables.display[4]"
         >
         </ui-select>
       </li>
@@ -175,7 +175,5 @@ export default {
   },
 
   props: ['config'],
-
-  ready() {},
 }
 </script>

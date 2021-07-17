@@ -5,45 +5,36 @@
         <ul>
           <li>
             <a
-              @click="$root.$refs.sidenav.show()"
+              @click="$root.$emit('showSidebar')"
               class="btn-floating btn-large blue-grey lighten-5 waves-effect waves-light"
             >
               <i class="black-text material-icons">settings</i>
             </a>
           </li>
-          <li v-if="$root.$refs.network">
-            <a
-              v-if="$root.$refs.network.state == null"
-              @click="$root.$refs.config.simulate()"
-            >
+          <li>
+            <a v-if="state === null" @click="$root.$emit('simulate', config)">
               <i class="material-icons left">play_arrow</i>
               <span class="fw-b">Simular</span>
             </a>
-            <a
-              v-if="$root.$refs.network.state != null"
-              @click="$root.$refs.config.simulate()"
-            >
+            <a v-if="state !== null" @click="$root.$emit('simulate', config)">
               <i class="material-icons left">refresh</i>
               <span class="fw-b">Reset</span>
             </a>
           </li>
           <li>
-            <a v-if="$parent.state == 'paused'" @click="$parent.play()">
+            <a v-if="state === 'paused'" @click="$parent.play()">
               <i class="material-icons left">play_arrow</i>
               <span class="fw-b">Play</span>
             </a>
-            <a v-if="$parent.state == 'playing'" @click="$parent.stop()">
+            <a v-if="state === 'playing'" @click="$parent.stop()">
               <i class="material-icons left">pause</i>
               <span class="fw-b">Pausar</span>
             </a>
           </li>
-          <li v-if="$root.$refs.network">
+          <li>
             <a
               @click="saveAsCsv()"
-              v-if="
-                $root.$refs.network.state == 'playing' ||
-                  $root.$refs.network.state == 'paused'
-              "
+              v-if="state === 'playing' || state === 'paused'"
             >
               <i class="material-icons left">file_download</i>
               <span class="fw-b">Salvar dados</span>
@@ -64,10 +55,13 @@
       <ui-loader :lazy="true">
         <ul class="flex">
           <li v-for="(item, i) in display" :key="i" v-show="item" class="chip">
-            <i class="fa fa-square {{item.color}}-text" aria-hidden="true"></i>
+            <i
+              :class="`fa fa-square ${item.color}-text`"
+              aria-hidden="true"
+            ></i>
             {{ item.label }}
             <span class="badge" style="width: 4em;">
-              {{ this[item.value] }}
+              {{ getData(item.value) }}
             </span>
           </li>
         </ul>
@@ -149,7 +143,7 @@
 
 <script>
 import _ from 'lodash'
-import $ from 'jquery'
+
 import csv from '../utils/csv'
 import moment from 'moment'
 import 'moment/locale/pt-br'
@@ -163,10 +157,12 @@ const Analytics = {
   inoculateDate: null,
   population: null,
   graph2d: null,
-  config: null,
+  config: {},
 }
 
 export default {
+  props: ['config', 'state'],
+
   data() {
     return {
       display: [],
@@ -175,65 +171,141 @@ export default {
 
   computed: {
     infected() {
-      var display = this.$parent['infected']
-      return this.displayValue(display)
+      if (this.$parent) {
+        var display = this.$parent['infected']
+        return this.displayValue(display)
+      }
+      return 0
     },
     infected_n_recovered() {
-      var display = this.$parent['infected'] + this.$parent['recovered']
-      return this.displayValue(display)
+      if (this.$parent) {
+        var display = this.$parent['infected'] + this.$parent['recovered']
+        return this.displayValue(display)
+      }
+      return 0
     },
     recovered() {
-      var display = this.$parent['recovered']
-      return this.displayValue(display)
+      if (this.$parent) {
+        var display = this.$parent['recovered']
+        return this.displayValue(display)
+      }
+      return 0
     },
     recovered_n_vaccinated() {
-      var display = this.$parent['recovered'] + this.$parent['vaccinated']
-      return this.displayValue(display)
+      if (this.$parent) {
+        var display = this.$parent['recovered'] + this.$parent['vaccinated']
+        return this.displayValue(display)
+      }
+      return 0
     },
     alive() {
-      var display =
-        this.$parent['infected'] +
-        this.$parent['recovered'] +
-        this.$parent['susceptible'] +
-        this.$parent['vaccinated']
-      return this.displayValue(display)
+      if (this.$parent) {
+        var display =
+          this.$parent['infected'] +
+          this.$parent['recovered'] +
+          this.$parent['susceptible'] +
+          this.$parent['vaccinated']
+        return this.displayValue(display)
+      }
+      return 0
     },
     susceptible() {
-      var display = this.$parent['susceptible']
-      return this.displayValue(display)
+      if (this.$parent) {
+        var display = this.$parent['susceptible']
+        return this.displayValue(display)
+      }
+      return 0
     },
     susceptible_n_vaccinated() {
-      var display = this.$parent['susceptible'] + this.$parent['vaccinated']
-      return this.displayValue(display)
+      if (this.$parent) {
+        var display = this.$parent['susceptible'] + this.$parent['vaccinated']
+        return this.displayValue(display)
+      }
+      return 0
     },
     susceptible_n_recovered() {
-      var display = this.$parent['susceptible'] + this.$parent['recovered']
-      return this.displayValue(display)
+      if (this.$parent) {
+        var display = this.$parent['susceptible'] + this.$parent['recovered']
+        return this.displayValue(display)
+      }
+      return 0
     },
     vaccinated() {
-      var display = this.$parent['vaccinated']
-      return this.displayValue(display)
+      if (this.$parent) {
+        var display = this.$parent['vaccinated']
+        return this.displayValue(display)
+      }
+      return 0
     },
     healthy() {
-      var display =
-        this.$parent['recovered'] +
-        this.$parent['susceptible'] +
-        this.$parent['vaccinated']
-      return this.displayValue(display)
+      if (this.$parent) {
+        var display =
+          this.$parent['recovered'] +
+          this.$parent['susceptible'] +
+          this.$parent['vaccinated']
+        return this.displayValue(display)
+      }
+      return 0
     },
     death() {
-      var display = this.$parent['death']
-      return this.displayValue(display)
+      if (this.$parent) {
+        var display = this.$parent['death']
+        return this.displayValue(display)
+      }
+      return 0
     },
   },
 
   methods: {
+    getData(name) {
+      return this[name]
+    },
+
+    loadEvent(population) {
+      this.normalize()
+      this.setGroups()
+
+      Analytics.currentDate = moment()
+      Analytics.inoculateDate = moment()
+      Analytics.population = population
+
+      if (Analytics.config.inoculationDelay.enabled) {
+        this.$parent.mayInoculate = false
+        Analytics.inoculateDate = moment().add(
+          Analytics.config.inoculationDelay.value,
+          Analytics.config.inoculationDelay.unit
+        )
+      }
+
+      var container = document.getElementById('graph')
+      Analytics.graph2d = new vis.Graph2d(
+        container,
+        Analytics.data,
+        Analytics.group,
+        this.options()
+      )
+    },
+
+    resetEvent() {
+      if (Analytics.graph2d) Analytics.graph2d.destroy()
+
+      Analytics.data.clear()
+      Analytics.group.clear()
+      Analytics.currentDate = null
+      Analytics.inoculateDate = null
+      Analytics.population = null
+      Analytics.config = null
+      this.display = []
+
+      this.$parent.$off('step')
+    },
+
     open() {
-      $('#bmodal').modal('open')
+      window.$('#bmodal').modal('open')
     },
 
     close() {
-      $('#bmodal').modal('close')
+      window.$('#bmodal').modal('close')
     },
 
     saveAsCsv() {
@@ -551,49 +623,16 @@ export default {
     },
   },
 
-  events: {
-    load(population) {
-      this.normalize()
-      this.setGroups()
-
-      Analytics.currentDate = moment()
-      Analytics.inoculateDate = moment()
-      Analytics.population = population
-
-      if (Analytics.config.inoculationDelay.enabled) {
-        this.$parent.mayInoculate = false
-        Analytics.inoculateDate = moment().add(
-          Analytics.config.inoculationDelay.value,
-          Analytics.config.inoculationDelay.unit
-        )
-      }
-
-      var container = document.getElementById('graph')
-      Analytics.graph2d = new vis.Graph2d(
-        container,
-        Analytics.data,
-        Analytics.group,
-        this.options()
-      )
-    },
-
-    reset() {
-      if (Analytics.graph2d) Analytics.graph2d.destroy()
-
-      Analytics.data.clear()
-      Analytics.group.clear()
-      Analytics.currentDate = null
-      Analytics.inoculateDate = null
-      Analytics.population = null
-      Analytics.config = null
-      this.display = []
-
-      this.$parent.$off('step')
-    },
+  mounted() {
+    this.$on('load', this.loadEvent)
+    this.$on('reset', this.resetEvent)
+    window.$('.modal').modal()
   },
 
-  ready() {
-    $('.modal').modal()
+  destroyed() {
+    this.$off('load', this.loadEvent)
+    this.$off('reset', this.resetEvent)
+    this.$off('statusChange', this.statusChangeEvent)
   },
 }
 </script>

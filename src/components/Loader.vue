@@ -1,6 +1,6 @@
 <template>
   <div class="pos-r" style="height: 100%;">
-    <div v-if="!done && !lazy" class="loader">
+    <div v-if="!done && (!lazy || reset)" class="loader">
       <div class="preloader-wrapper big active">
         <div class="spinner-layer">
           <div class="circle-clipper left">
@@ -29,25 +29,24 @@
 </style>
 
 <script>
-import $ from 'jquery'
-
 export default {
   props: ['onLoad', 'lazy'],
 
   data() {
     return {
       done: false,
+      reset: false,
     }
   },
 
   methods: {
     show() {
-      var el = $(this.$el)
+      var el = window.$(this.$el)
       el.show()
     },
 
     hide() {
-      var el = $(this.$el)
+      var el = window.$(this.$el)
       el.hide()
     },
   },
@@ -58,13 +57,14 @@ export default {
     },
   },
 
-  ready() {
+  mounted() {
     this.$parent.$on('load', () => {
       this.done = true
+      this.reset = false
     })
     this.$parent.$on('reset', () => {
       this.done = false
-      this.lazy = false
+      this.reset = true
     })
   },
 }

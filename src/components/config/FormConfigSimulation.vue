@@ -4,12 +4,12 @@
       <ui-select
         label="Modo de simulação"
         :options="mode"
-        :val.sync="config.mode"
+        v-model="config.mode"
       ></ui-select>
       <ui-slider
         v-show="config.mode == 'visual'"
         label="Intervalo de tempo (ms)"
-        :val.sync="config.step"
+        v-model="config.step"
         step="50"
         min="0"
         max="2000"
@@ -21,12 +21,12 @@
           <ui-select
             label="Tipo de infecção"
             :options="infectBy"
-            :val.sync="config.infectBy"
+            v-model="config.infectBy"
           ></ui-select>
           <ui-slider
             v-if="config.infectBy == 'special'"
             label="Constante k"
-            :val.sync="config.k"
+            v-model="config.k"
             step="0.01"
             min="0"
             max="1"
@@ -36,7 +36,7 @@
 
         <li class="collection-item">
           <ui-checkbox
-            :checked.sync="config.inoculation.active"
+            v-model="config.inoculation.active"
             name="config.inoculation.active"
             label="Ativar Inoculação"
           >
@@ -46,14 +46,14 @@
                   label="Tipo de distribuição"
                   class="col s12 m6"
                   :options="inoculationBy"
-                  :val.sync="config.inoculation.by"
+                  v-model="config.inoculation.by"
                 >
                 </ui-select>
 
                 <div class="col s12 m6 input-field">
                   <div class="fl-r">
                     <ui-checkbox
-                      :checked.sync="config.inoculation.limit.percent"
+                      v-model="config.inoculation.limit.percent"
                       name="config.inoculation.limit.percent"
                       label="%"
                     ></ui-checkbox>
@@ -77,7 +77,7 @@
               <div v-if="config.mode == 'visual'">
                 <ui-slider
                   label="Número de distribuições / passo de tempo"
-                  :val.sync="config.inoculation.rate"
+                  v-model="config.inoculation.rate"
                   step="1"
                   min="0"
                   max="50"
@@ -88,7 +88,7 @@
               <div v-if="config.mode == 'scientific'">
                 <ui-slider
                   label="Número de distribuições / passo de tempo"
-                  :val.sync="config.inoculation.rate"
+                  v-model="config.inoculation.rate"
                   step="1"
                   min="0"
                   max="1000"
@@ -120,14 +120,14 @@
 
           <li class="collection-item">
             <ui-checkbox
-              :checked.sync="config.i.mayInfect"
+              v-model="config.i.mayInfect"
               name="config.i.mayInfect"
               label="Podem infectar"
             >
               <ui-slider
                 label="Taxa de infecção base"
                 icon="fa-square red-text"
-                :val.sync="config.i.base.infect"
+                v-model="config.i.base.infect"
                 step="0.5"
                 decimals="1"
                 postfix="%"
@@ -137,14 +137,14 @@
 
           <li class="collection-item">
             <ui-checkbox
-              :checked.sync="config.i.mayRecover"
+              v-model="config.i.mayRecover"
               name="config.i.mayRecover"
               label="Podem se recuperar"
             >
               <ui-slider
                 label="Taxa de recuperação base"
                 icon="fa-square yellow-text"
-                :val.sync="config.i.base.recover"
+                v-model="config.i.base.recover"
                 step="0.5"
                 decimals="1"
                 postfix="%"
@@ -154,14 +154,14 @@
 
           <li class="collection-item">
             <ui-checkbox
-              :checked.sync="config.i.mayGetSusceptible"
+              v-model="config.i.mayGetSusceptible"
               name="config.i.mayGetSusceptible"
               label="Podem se tornar suscetíveis"
             >
               <ui-slider
                 label="Taxa de suscetibilidade base"
                 icon="fa-square grey-text"
-                :val.sync="config.i.base.susceptible"
+                v-model="config.i.base.susceptible"
                 step="0.5"
                 decimals="1"
                 postfix="%"
@@ -171,7 +171,7 @@
 
           <li class="collection-item">
             <ui-checkbox
-              :checked.sync="config.i.mayBeVaccinated"
+              v-model="config.i.mayBeVaccinated"
               name="config.i.mayBeVaccinated"
               label="Podem ser vacinados"
             >
@@ -180,14 +180,14 @@
 
           <li class="collection-item">
             <ui-checkbox
-              :checked.sync="config.i.mayDie"
+              v-model="config.i.mayDie"
               name="config.i.mayDie"
               label="Podem falecer"
             >
               <ui-slider
                 label="Taxa de falecimento base"
                 icon="fa-square black-text"
-                :val.sync="config.i.base.death"
+                v-model="config.i.base.death"
                 step="0.5"
                 decimals="1"
                 postfix="%"
@@ -210,14 +210,14 @@
 
           <li class="collection-item">
             <ui-checkbox
-              :checked.sync="config.r.mayInfect"
+              v-model="config.r.mayInfect"
               name="config.r.mayInfect"
               label="Podem infectar"
             >
               <ui-slider
                 label="Taxa de infecção base"
                 icon="fa-square red-text"
-                :val.sync="config.r.base.infect"
+                v-model="config.r.base.infect"
                 step="0.5"
                 decimals="1"
                 postfix="%"
@@ -227,14 +227,14 @@
 
           <li class="collection-item">
             <ui-checkbox
-              :checked.sync="config.r.mayBeInfected"
+              v-model="config.r.mayBeInfected"
               name="config.r.mayBeInfected"
               label="Podem ser infectados"
             >
               <ui-slider
                 label="Taxa de resistência base"
                 icon="fa-square-o green-text"
-                :val.sync="config.r.base.resist"
+                v-model="config.r.base.resist"
                 step="0.5"
                 decimals="1"
                 postfix="%"
@@ -244,14 +244,14 @@
 
           <li class="collection-item">
             <ui-checkbox
-              :checked.sync="config.r.mayGetSusceptible"
+              v-model="config.r.mayGetSusceptible"
               name="config.r.mayGetSusceptible"
               label="Podem se tornar suscetíveis"
             >
               <ui-slider
                 label="Taxa de suscetibilidade base"
                 icon="fa-square grey-text"
-                :val.sync="config.r.base.susceptible"
+                v-model="config.r.base.susceptible"
                 step="0.5"
                 decimals="1"
                 postfix="%"
@@ -261,7 +261,7 @@
 
           <li class="collection-item">
             <ui-checkbox
-              :checked.sync="config.r.mayBeVaccinated"
+              v-model="config.r.mayBeVaccinated"
               name="config.r.mayBeVaccinated"
               label="Podem ser vacinados"
             >
@@ -270,14 +270,14 @@
 
           <li class="collection-item">
             <ui-checkbox
-              :checked.sync="config.r.mayDie"
+              v-model="config.r.mayDie"
               name="config.r.mayDie"
               label="Podem falecer"
             >
               <ui-slider
                 label="Taxa de falecimento base"
                 icon="fa-square black-text"
-                :val.sync="config.r.base.death"
+                v-model="config.r.base.death"
                 step="0.5"
                 decimals="1"
                 postfix="%"
@@ -299,14 +299,14 @@
 
           <li class="collection-item">
             <ui-checkbox
-              :checked.sync="config.s.mayInfect"
+              v-model="config.s.mayInfect"
               name="config.s.mayInfect"
               label="Podem infectar"
             >
               <ui-slider
                 label="Taxa de infecção base"
                 icon="fa-square red-text"
-                :val.sync="config.s.base.infect"
+                v-model="config.s.base.infect"
                 step="0.5"
                 decimals="1"
                 postfix="%"
@@ -316,14 +316,14 @@
 
           <li class="collection-item">
             <ui-checkbox
-              :checked.sync="config.s.mayBeInfected"
+              v-model="config.s.mayBeInfected"
               name="config.s.mayBeInfected"
               label="Podem ser infectados"
             >
               <ui-slider
                 label="Taxa de resistência base"
                 icon="fa-square-o green-text"
-                :val.sync="config.s.base.resist"
+                v-model="config.s.base.resist"
                 step="0.5"
                 decimals="1"
                 postfix="%"
@@ -333,14 +333,14 @@
 
           <li class="collection-item">
             <ui-checkbox
-              :checked.sync="config.s.mayRecover"
+              v-model="config.s.mayRecover"
               name="config.s.mayRecover"
               label="Podem se recuperar"
             >
               <ui-slider
                 label="Taxa de recuperação base"
                 icon="fa-square yellow-text"
-                :val.sync="config.s.base.recover"
+                v-model="config.s.base.recover"
                 step="0.5"
                 decimals="1"
                 postfix="%"
@@ -350,7 +350,7 @@
 
           <li class="collection-item">
             <ui-checkbox
-              :checked.sync="config.s.mayBeVaccinated"
+              v-model="config.s.mayBeVaccinated"
               name="config.s.mayBeVaccinated"
               label="Podem ser vacinados"
             >
@@ -359,14 +359,14 @@
 
           <li class="collection-item">
             <ui-checkbox
-              :checked.sync="config.s.mayDie"
+              v-model="config.s.mayDie"
               name="config.s.mayDie"
               label="Podem falecer"
             >
               <ui-slider
                 label="Taxa de falecimento base"
                 icon="fa-square black-text"
-                :val.sync="config.s.base.death"
+                v-model="config.s.base.death"
                 step="0.5"
                 decimals="1"
                 postfix="%"
@@ -388,14 +388,14 @@
 
           <li class="collection-item">
             <ui-checkbox
-              :checked.sync="config.v.mayInfect"
+              v-model="config.v.mayInfect"
               name="config.v.mayInfect"
               label="Podem infectar"
             >
               <ui-slider
                 label="Taxa de infecção base"
                 icon="fa-square red-text"
-                :val.sync="config.v.base.infect"
+                v-model="config.v.base.infect"
                 step="0.5"
                 decimals="1"
                 postfix="%"
@@ -405,14 +405,14 @@
 
           <li class="collection-item">
             <ui-checkbox
-              :checked.sync="config.v.mayBeInfected"
+              v-model="config.v.mayBeInfected"
               name="config.v.mayBeInfected"
               label="Podem ser infectado"
             >
               <ui-slider
                 label="Taxa de resistência base"
                 icon="fa-square-o green-text"
-                :val.sync="config.v.base.resist"
+                v-model="config.v.base.resist"
                 step="0.5"
                 decimals="1"
                 postfix="%"
@@ -422,14 +422,14 @@
 
           <li class="collection-item">
             <ui-checkbox
-              :checked.sync="config.v.mayRecover"
+              v-model="config.v.mayRecover"
               name="config.v.mayRecover"
               label="Podem se recuperar"
             >
               <ui-slider
                 label="Taxa de recuperação base"
                 icon="fa-square yellow-text"
-                :val.sync="config.v.base.recover"
+                v-model="config.v.base.recover"
                 step="0.5"
                 decimals="1"
                 postfix="%"
@@ -439,14 +439,14 @@
 
           <li class="collection-item">
             <ui-checkbox
-              :checked.sync="config.v.mayGetSusceptible"
+              v-model="config.v.mayGetSusceptible"
               name="config.v.mayGetSusceptible"
               label="Podem se tornar suscetíveis"
             >
               <ui-slider
                 label="Taxa de suscetibilidade base"
                 icon="fa-square grey-text"
-                :val.sync="config.v.base.susceptible"
+                v-model="config.v.base.susceptible"
                 step="0.5"
                 decimals="1"
                 postfix="%"
@@ -456,14 +456,14 @@
 
           <li class="collection-item">
             <ui-checkbox
-              :checked.sync="config.v.mayDie"
+              v-model="config.v.mayDie"
               name="config.v.mayDie"
               label="Podem falecer"
             >
               <ui-slider
                 label="Taxa de falecimento base"
                 icon="fa-square black-text"
-                :val.sync="config.v.base.death"
+                v-model="config.v.base.death"
                 step="0.5"
                 decimals="1"
                 postfix="%"
@@ -485,7 +485,7 @@
 
           <li class="collection-item">
             <ui-checkbox
-              :checked.sync="config.d.birthWhenDie"
+              v-model="config.d.birthWhenDie"
               label="Nascimento após morte"
               name="config.d.birthWhenDie"
             ></ui-checkbox>
@@ -497,8 +497,6 @@
 </template>
 
 <script>
-import $ from 'jquery'
-
 export default {
   data() {
     return {
@@ -522,8 +520,9 @@ export default {
 
   props: ['config'],
 
-  ready() {
-    $(this.$el)
+  mounted() {
+    window
+      .$(this.$el)
       .find('.collapsible')
       .collapsible()
   },

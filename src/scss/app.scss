@@ -1,17 +1,10 @@
 // Fonts
-@import 'https://fonts.googleapis.com/css?family=Raleway:300,400,600';
-@import 'https://fonts.googleapis.com/css?family=Sahitya';
-@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600&family=Sahitya&display=swap');
 
-// Variables
-@import "~materialize-css/sass/components/color";
 @import "variables";
-
-//Css-Utils
 @import "utils";
-@import "nouislider";
 
-// Materialize
+@import "nouislider";
 @import "~materialize-css/sass/materialize";
 
 @media #{$small-and-down} {
@@ -24,6 +17,9 @@
 }
 
 @media #{$medium-and-down} {
+  .mob-des-hidden {
+    display: none !important;
+  }
 }
 
 @media #{$large-and-up} {

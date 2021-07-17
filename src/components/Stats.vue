@@ -1,5 +1,5 @@
 <template>
-  <ul class="stats">
+  <ul class="stats" style="user-select: none">
     <li class="chip">
       <i class="fa fa-square red-text" aria-hidden="true"></i>
       Infectados
@@ -60,7 +60,5 @@
 </style>
 
 <script>
-export default {
-  ready() {},
-}
+export default {}
 </script>

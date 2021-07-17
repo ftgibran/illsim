@@ -9,22 +9,22 @@
     <li class="grey lighten-5">
       <div class="collapsible-header">Nível</div>
       <div class="collapsible-body pl pr">
-        <div v-if="mode == 'visual'">
+        <div v-if="mode === 'visual'">
           <ui-slider
             v-if="factory.level"
             label="Nível"
-            :val.sync="factory.level"
+            v-model="factory.level"
             step="1"
             min="1"
             max="20"
             decimals="0"
           ></ui-slider>
         </div>
-        <div v-if="mode == 'scientific'">
+        <div v-if="mode === 'scientific'">
           <ui-slider
             v-if="factory.level"
             label="Nível"
-            :val.sync="factory.level"
+            v-model="factory.level"
             step="1"
             min="50"
             max="120"
@@ -41,7 +41,7 @@
           <div class="input-field s12 m6 col">
             <div class="fl-r">
               <ui-checkbox
-                :checked.sync="groupInfected.percent"
+                v-model="groupInfected.percent"
                 name="groupInfected"
                 label="%"
               ></ui-checkbox>
@@ -60,7 +60,7 @@
           <div class="input-field s12 m6 col">
             <div class="fl-r">
               <ui-checkbox
-                :checked.sync="groupVaccinated.percent"
+                v-model="groupVaccinated.percent"
                 name="groupVaccinated"
                 label="%"
               ></ui-checkbox>
@@ -83,10 +83,10 @@
         </div>
 
         <ui-slider
-          v-if="factory.node && (infectBy == 'node' || infectBy == 'both')"
+          v-if="factory.node && (infectBy === 'node' || infectBy === 'both')"
           icon="fa-square red-text"
           label="Taxa de infecção"
-          :val.sync="factory.node.rate.infect"
+          v-model="factory.node.rate.infect"
           step="0.5"
           min="0"
           max="100"
@@ -98,7 +98,7 @@
           v-if="factory.node"
           icon="fa-square-o green-text"
           label="Taxa de resistência"
-          :val.sync="factory.node.rate.resist"
+          v-model="factory.node.rate.resist"
           step="0.5"
           min="0"
           max="100"
@@ -110,7 +110,7 @@
           v-if="factory.node"
           icon="fa-square yellow-text"
           label="Taxa de recuperação"
-          :val.sync="factory.node.rate.recover"
+          v-model="factory.node.rate.recover"
           step="0.5"
           min="0"
           max="100"
@@ -122,7 +122,7 @@
           v-if="factory.node"
           icon="fa-square grey-text"
           label="Taxa de suscetibilidade"
-          :val.sync="factory.node.rate.susceptible"
+          v-model="factory.node.rate.susceptible"
           step="0.5"
           min="0"
           max="100"
@@ -134,7 +134,7 @@
           v-if="factory.node"
           icon="fa-square black-text"
           label="Taxa de falecimento"
-          :val.sync="factory.node.rate.death"
+          v-model="factory.node.rate.death"
           step="0.5"
           min="0"
           max="100"
@@ -144,14 +144,17 @@
       </div>
     </li>
 
-    <li v-if="infectBy == 'edge' || infectBy == 'both'" class="grey lighten-5">
+    <li
+      v-if="infectBy === 'edge' || infectBy === 'both'"
+      class="grey lighten-5"
+    >
       <div class="collapsible-header">Arestas</div>
       <div class="collapsible-body pl pr">
         <ui-slider
           v-if="factory.edge"
           icon="fa-square red-text"
           label="Taxa de infecção"
-          :val.sync="factory.edge.rate.infect"
+          v-model="factory.edge.rate.infect"
           step="0.5"
           min="0"
           max="100"
@@ -164,18 +167,34 @@
 </template>
 
 <script>
-import $ from 'jquery'
-
 export default {
-  props: ['factory', 'mode', 'infectBy'],
+  props: ['factory', 'value', 'simulation'],
 
   computed: {
+    mode: {
+      get() {
+        return this.value
+      },
+      set(val) {
+        this.$emit('input', val)
+      },
+    },
+
+    infectBy: {
+      get() {
+        return this.simulation.infectBy
+      },
+      set(val) {
+        this.simulation.infectBy = val
+      },
+    },
+
     groupInfected() {
       if (!this.factory.node) return {}
 
       for (var i in this.factory.node.groups) {
         var group = this.factory.node.groups[i]
-        if (group.ref == 'i') return group
+        if (group.ref === 'i') return group
       }
 
       return {}
@@ -186,15 +205,15 @@ export default {
 
       for (var i in this.factory.node.groups) {
         var group = this.factory.node.groups[i]
-        if (group.ref == 'v') return group
+        if (group.ref === 'v') return group
       }
 
       return {}
     },
   },
 
-  ready() {
-    $(this.$el).collapsible()
+  mounted() {
+    window.$(this.$el).collapsible()
   },
 }
 </script>

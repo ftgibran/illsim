@@ -9,7 +9,7 @@
             ><i class="black-text material-icons">arrow_back</i></a
           >
         </div>
-        <ul>
+        <ul class="mob-des-hidden">
           <li>
             <a @click="upload()">
               <i class="material-icons left">file_upload</i>
@@ -66,7 +66,7 @@
 
       <form-config-animation
         :config="config.animation"
-        :mode.sync="config.simulation.mode"
+        :mode="config.simulation.mode"
       ></form-config-animation>
     </div>
 
@@ -83,8 +83,7 @@
 
       <form-config-generator
         :config="config.generator"
-        :mode.sync="config.simulation.mode"
-        :infect-by.sync="config.simulation.infectBy"
+        :simulation="config.simulation"
       ></form-config-generator>
     </div>
 
@@ -97,20 +96,27 @@
 </template>
 
 <script>
-import $ from 'jquery'
 import Materialize from 'materialize-css'
-import Config from '../../config.json'
 
 export default {
-  data() {
-    return {
-      config: {},
-    }
+  props: ['value'],
+
+  computed: {
+    config: {
+      get() {
+        return this.value
+      },
+      set(val) {
+        this.value = val
+      },
+    },
   },
 
   methods: {
-    init() {
-      $('ul.tabs').tabs()
+    async init() {
+      await this.$nextTick()
+
+      window.$('ul.tabs').tabs()
 
       var onReaderLoad = event => {
         this.config = JSON.parse(event.target.result)
@@ -197,8 +203,7 @@ export default {
     },
   },
 
-  ready() {
-    this.config = Config
+  mounted() {
     this.$emit('load')
   },
 }
