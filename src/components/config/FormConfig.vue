@@ -9,7 +9,7 @@
             ><i class="black-text material-icons">arrow_back</i></a
           >
         </div>
-        <ul class="mob-des-hidden">
+        <ul class="mob-tab-hidden">
           <li>
             <a @click="upload()">
               <i class="material-icons left">file_upload</i>

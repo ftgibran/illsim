@@ -60,7 +60,7 @@
         </li>
       </ul>
 
-      <div class="brand-logo mob-des-hidden center grey-text">
+      <div class="brand-logo mob-tab-hidden center grey-text">
         <span class="sahitya">ILLSIM</span>
       </div>
     </div>

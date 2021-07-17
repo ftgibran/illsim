@@ -94,6 +94,8 @@ export default {
       )
     }
 
+    this.hide()
+
     this.$root.$on('showSidebar', this.show)
     this.$root.$on('reset', this.hide)
 

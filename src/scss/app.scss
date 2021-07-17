@@ -14,10 +14,13 @@
 }
 
 @media #{$medium-and-up} {
+  .des-hidden {
+    display: none !important;
+  }
 }
 
 @media #{$medium-and-down} {
-  .mob-des-hidden {
+  .mob-tab-hidden {
     display: none !important;
   }
 }

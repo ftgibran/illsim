@@ -12,6 +12,8 @@
       :network-state="state"
       @changeState="stateEvent"
     />
+
+    <welcome />
   </div>
 </template>
 
@@ -30,6 +32,9 @@ export default {
     stateEvent(val) {
       this.state = val
     },
+  },
+  mounted() {
+    window.$('#welcome').modal('open')
   },
 }
 </script>

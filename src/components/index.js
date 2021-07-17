@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Welcome from './Welcome'
 import Network from './Network'
 import Analytics from './Analytics'
 import Loader from './Loader'
@@ -16,6 +17,7 @@ import FormConfigUniformFormat from './config/FormConfigUniformFormat'
 import FormConfigFullRandom from './config/FormConfigFullRandom'
 import FormConfigAnalytics from './config/FormConfigAnalytics'
 
+Vue.component('welcome', Welcome)
 Vue.component('network', Network)
 Vue.component('analytics', Analytics)
 
